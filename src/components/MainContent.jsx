@@ -30,8 +30,8 @@ export default function MainContent() {
     const [today, setToday] = useState("");
     const availableCities = [
         { displayName: "مكة المكرمة", apiName: "Makkah al Mukarramah" },
-        { displayName: "دمشق", apiName: "Damascus" }, // إضافة مدينة دمشق
-        { displayName: "السليمانية", apiName: "Sulaymaniyah" }, // إضافة مدينة السليمانية
+        { displayName: "دمشق", apiName: "Damascus" },
+        { displayName: "السليمانية", apiName: "Sulaymaniyah" },
     ];
 
     const prayersArray = [
@@ -47,7 +47,12 @@ export default function MainContent() {
         const response = await axios.get(
             `https://api.aladhan.com/v1/timingsByCity?country=SA&city=${selectedCity.apiName}`
         );
-        setTimings(response.data.data.timings);
+        // تحويل الوقت المسترجع من ال API إلى تنسيق AM و PM
+        const formattedTimings = {};
+        Object.keys(response.data.data.timings).forEach((key) => {
+            formattedTimings[key] = moment(response.data.data.timings[key], "HH:mm").format("hh:mm A");
+        });
+        setTimings(formattedTimings);
     };
 
     useEffect(() => {
@@ -60,7 +65,7 @@ export default function MainContent() {
         }, 1000);
 
         const t = moment();
-        setToday(t.format("MMM Do YYYY | h:mm"));
+        setToday(t.format("MMM Do YYYY | h:mm A"));
 
         return () => {
             clearInterval(interval);
