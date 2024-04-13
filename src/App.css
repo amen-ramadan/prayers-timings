@@ -48,3 +48,31 @@ html {
 .MuiSvgIcon-root {
 	color: white !important;
 }
+
+
+.prayers {
+	display: flex !important;
+	justify-content: space-around !important;
+	flex-direction: row!important;
+	flex-wrap: wrap!important;
+	row-gap: 20px!important;
+	column-gap: 8px !important;
+}
+
+
+@media (max-width: 399px) {
+	.prayer {
+		width: 250px  !important;
+	}
+}
+
+/* جعل العناصر مركزية على الأجهزة الصغيرة */
+/* @media (max-width: 600px) {
+	.MuiContainer-root {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+	}
+} */
+
+
