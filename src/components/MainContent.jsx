@@ -17,9 +17,9 @@ export default function MainContent() {
     const [timings, setTimings] = useState({
         Fajr: "04:20",
         Dhuhr: "11:50",
-        Asr: "15:18",
-        Sunset: "18:03",
-        Isha: "19:33",
+        Asr: "03:18", // تعديل على الوقت لنظام 12 ساعة
+        Sunset: "06:03", // تعديل على الوقت لنظام 12 ساعة
+        Isha: "07:33", // تعديل على الوقت لنظام 12 ساعة
     });
 
     const [remainingTime, setRemainingTime] = useState("");
@@ -47,12 +47,7 @@ export default function MainContent() {
         const response = await axios.get(
             `https://api.aladhan.com/v1/timingsByCity?country=SA&city=${selectedCity.apiName}`
         );
-        // تحويل الوقت المسترجع من ال API إلى تنسيق AM و PM
-        const formattedTimings = {};
-        Object.keys(response.data.data.timings).forEach((key) => {
-            formattedTimings[key] = moment(response.data.data.timings[key], "HH:mm").format("hh:mm A");
-        });
-        setTimings(formattedTimings);
+        setTimings(response.data.data.timings);
     };
 
     useEffect(() => {
@@ -65,7 +60,7 @@ export default function MainContent() {
         }, 1000);
 
         const t = moment();
-        setToday(t.format("MMM Do YYYY | h:mm A"));
+        setToday(t.format("MMM Do YYYY | h:mm A")); // تعديل على تنسيق الوقت
 
         return () => {
             clearInterval(interval);
@@ -128,18 +123,20 @@ export default function MainContent() {
         setSelectedCity(cityObject);
     };
 
+    
+
     return (
         <>
             <Grid container>
                 <Grid>
-                    <div>
+                    <div style={{margin: "0 20px"}}>
                         <h2 style={{ margin: "0 8px" }}>{today}</h2>
                         <h1>{selectedCity.displayName}</h1>
                     </div>
                 </Grid>
 
                 <Grid>
-                    <div>
+                    <div style={{margin: "0 20px"}}>
                         <h2 style={{ margin: "0 8px" }}>متبقي حتى صلاة {prayersArray[nextPrayerIndex].displayName}</h2>
                         <h1>{remainingTime}</h1>
                     </div>
