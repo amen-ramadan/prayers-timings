@@ -30,8 +30,8 @@ export default function MainContent() {
     const [today, setToday] = useState("");
     const availableCities = [
         { displayName: "مكة المكرمة", apiName: "Makkah al Mukarramah" },
-        { displayName: "الرياض", apiName: "Riyadh" },
-        { displayName: "الدمام", apiName: "Dammam" },
+        { displayName: "دمشق", apiName: "Damascus" }, // إضافة مدينة دمشق
+        { displayName: "السليمانية", apiName: "Sulaymaniyah" }, // إضافة مدينة السليمانية
     ];
 
     const prayersArray = [
